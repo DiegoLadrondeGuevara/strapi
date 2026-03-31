@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "promotions",
+  "info": {
+    "singularName": "promotion",
+    "pluralName": "promotions",
+    "displayName": "Promotion"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "discount": {
+      "type": "decimal",
+      "required": true
+    },
+    "rules": {
+      "type": "text"
+    },
+    "active": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}
