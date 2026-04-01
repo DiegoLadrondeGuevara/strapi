@@ -3,20 +3,20 @@ export default ({ env }) => ({
     config: {
       provider: 'aws-s3',
       providerOptions: {
-        baseUrl: env('CLOUDFRONT_URL'), // Ensures Strapi returns CloudFront URLs instead of raw S3 URLs
+        baseUrl: env('CLOUDFRONT_URL'),
         s3Options: {
           credentials: {
             accessKeyId: env('AWS_ACCESS_KEY_ID'),
-            secretAccessKey: env('AWS_ACCESS_SECRET_KEY'),
+            // CORRECCIÓN: El nombre debe coincidir EXACTO con tu .env
+            secretAccessKey: env('AWS_SECRET_ACCESS_KEY'),
           },
           region: env('AWS_REGION', 'us-east-2'),
           forcePathStyle: true,
-          signatureVersion: 'v4',
-          params: {
-            Bucket: env('S3_BUCKET', 'dulceruth-assets'),
-            // Supported MIME types like JSON (Lottie) or WebP automatically inherit 
-            // the contentType mapped by Strapi's internal mime parser.
-          },
+          // Eliminamos signatureVersion 'v4' si usas Strapi 5 + SDK v3 de AWS, 
+          // ya que viene por defecto y a veces causa conflictos si se fuerza.
+        },
+        params: {
+          Bucket: env('S3_BUCKET', 'dulceruth-assets'),
         },
       },
       actionOptions: {
