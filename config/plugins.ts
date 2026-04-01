@@ -10,6 +10,8 @@ export default ({ env }) => ({
             secretAccessKey: env('AWS_ACCESS_SECRET_KEY'),
           },
           region: env('AWS_REGION', 'us-east-2'),
+          forcePathStyle: true,
+          signatureVersion: 'v4',
           params: {
             Bucket: env('S3_BUCKET', 'dulceruth-assets'),
             // Supported MIME types like JSON (Lottie) or WebP automatically inherit 
