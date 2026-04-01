@@ -1,39 +1,31 @@
 import { v4 as uuidv4 } from 'uuid';
-import path from 'path';
 
 export default {
   /**
    * An asynchronous register function that runs before
    * your application is initialized.
    */
-  register(/* { strapi } */) {},
+  register({ strapi }) {
+    // Intercept upload to inject folderPath into the file's path before S3 provider receives it
+    const providerService = strapi.plugin('upload').service('provider');
+    const originalUpload = providerService.upload;
+    
+    providerService.upload = async (file, customConfig) => {
+      // file.folderPath contains the Media Library folder (e.g. "/banners" or "/products/cakes")
+      if (file.folderPath && file.folderPath !== '/') {
+        // The S3 provider natively prepends file.path to the final S3 key
+        // We strip the leading slash to prevent double slashes in S3
+        file.path = file.folderPath.replace(/^\//, ''); 
+      }
+      return originalUpload.call(providerService, file, customConfig);
+    };
+  },
 
   /**
    * An asynchronous bootstrap function that runs before
    * your application gets started.
    */
   bootstrap({ strapi }) {
-    // Intercept file uploads to enforce UUID names and try to organize by folder
-    strapi.db.lifecycles.subscribe({
-      models: ['plugin::upload.file'],
-      beforeCreate(event) {
-        const { data } = event.params;
-        
-        // Replace the random Strapi hash with a UUID
-        const newUuid = uuidv4();
-        data.hash = newUuid;
-        
-        // If uploaded to a specific folder in Strapi admin, we prepend it to the path.
-        // If not, we put it in a generic UUID directory to avoid S3 root clutter
-        const folderPrefix = data.folderPath && data.folderPath !== '/' 
-          ? data.folderPath.replace(/^\//, '') // removes leading slash
-          : 'general';
-          
-        // The S3 provider uses `hash` or `path` + `hash`. Let's force the S3 path:
-        // By changing `url` or `hash`, the S3 provider reacts.
-        // Actually, the S3 provider uses `file.path` if present before `file.hash`.
-        data.path = `${folderPrefix}/${newUuid}`;
-      },
-    });
+    // Other logic if necessary
   },
 };

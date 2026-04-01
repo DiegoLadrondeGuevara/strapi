@@ -1,13 +1,15 @@
 export default ({ env }) => ({
   connection: {
-    client: 'mysql',
+    client: env('DATABASE_CLIENT', 'mysql'),
     connection: {
-      host: env('DB_HOST', '127.0.0.1'),
-      port: env.int('DB_PORT', 3306),
-      database: env('DB_NAME', 'strapi'),
-      user: env('DB_USER', 'root'),
-      password: env('DB_PASSWORD', ''),
-      ssl: env.bool('DB_SSL', false) ? { rejectUnauthorized: false } : false,
+      host: env('DATABASE_HOST'),
+      port: env.int('DATABASE_PORT', 3306),
+      database: env('DATABASE_NAME'),
+      user: env('DATABASE_USERNAME'),
+      password: env('DATABASE_PASSWORD'),
+      ssl: env.bool('DATABASE_SSL', false)
+        ? { rejectUnauthorized: false }
+        : false,
     },
     pool: { min: 2, max: 10 },
   },

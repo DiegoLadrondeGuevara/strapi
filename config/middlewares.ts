@@ -8,8 +8,20 @@ export default [
         useDefaults: true,
         directives: {
           'connect-src': ["'self'", 'https:'],
-          'img-src': ["'self'", 'data:', 'blob:', 'dl.airtable.com', `${process.env.S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com`],
-          'media-src': ["'self'", 'data:', 'blob:', 'dl.airtable.com', `${process.env.S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com`],
+          'img-src': [
+            "'self'", 
+            'data:', 
+            'blob:', 
+            'dl.airtable.com', 
+            process.env.CLOUDFRONT_URL ? process.env.CLOUDFRONT_URL.replace('https://', '') : `${process.env.S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com`
+          ],
+          'media-src': [
+            "'self'", 
+            'data:', 
+            'blob:', 
+            'dl.airtable.com', 
+            process.env.CLOUDFRONT_URL ? process.env.CLOUDFRONT_URL.replace('https://', '') : `${process.env.S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com`
+          ],
           upgradeInsecureRequests: null,
         },
       },
