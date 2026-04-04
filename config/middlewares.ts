@@ -13,14 +13,18 @@ export default [
             'data:', 
             'blob:', 
             'dl.airtable.com', 
-            process.env.CLOUDFRONT_URL ? process.env.CLOUDFRONT_URL.replace('https://', '') : `${process.env.S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com`
+            '*.cloudfront.net',
+            '*.amazonaws.com',
+            env('CLOUDFRONT_URL', '').replace('https://', '')
           ],
           'media-src': [
             "'self'", 
             'data:', 
             'blob:', 
             'dl.airtable.com', 
-            process.env.CLOUDFRONT_URL ? process.env.CLOUDFRONT_URL.replace('https://', '') : `${process.env.S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com`
+            '*.cloudfront.net',
+            '*.amazonaws.com',
+            env('CLOUDFRONT_URL', '').replace('https://', '')
           ],
           upgradeInsecureRequests: null,
         },
@@ -29,10 +33,15 @@ export default [
   },
   {
     name: 'strapi::cors',
-    config: {
+    config: { 
       enabled: true,
       headers: '*',
-      origin: ['http://localhost:3000', 'http://localhost:1337', process.env.PUBLIC_URL || '*'] // Restrict to frontends
+      origin: [
+        'http://localhost:3000', 
+        'http://localhost:1337', 
+        'https://i6r407vake.execute-api.us-east-2.amazonaws.com', // API Gateway
+        env('FRONTEND_URL', '*') // Frontend placeholder
+      ]
     }
   },
   'strapi::poweredBy',
