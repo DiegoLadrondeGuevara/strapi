@@ -15,14 +15,17 @@
       "type": "string",
       "required": true
     },
-    "link": {
-      "type": "string"
-    },
     "image": {
       "type": "media",
       "multiple": false,
       "required": true,
-      "allowedTypes": ["images"]
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "active_status": {
+      "type": "boolean",
+      "default": true
     }
   }
 }

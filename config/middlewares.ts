@@ -1,4 +1,4 @@
-export default [
+export default ({ env }) => [
   'strapi::logger',
   'strapi::errors',
   {
@@ -9,19 +9,19 @@ export default [
         directives: {
           'connect-src': ["'self'", 'https:'],
           'img-src': [
-            "'self'", 
-            'data:', 
-            'blob:', 
-            'dl.airtable.com', 
+            "'self'",
+            'data:',
+            'blob:',
+            'dl.airtable.com',
             '*.cloudfront.net',
             '*.amazonaws.com',
             env('CLOUDFRONT_URL', '').replace('https://', '')
           ],
           'media-src': [
-            "'self'", 
-            'data:', 
-            'blob:', 
-            'dl.airtable.com', 
+            "'self'",
+            'data:',
+            'blob:',
+            'dl.airtable.com',
             '*.cloudfront.net',
             '*.amazonaws.com',
             env('CLOUDFRONT_URL', '').replace('https://', '')
@@ -33,12 +33,12 @@ export default [
   },
   {
     name: 'strapi::cors',
-    config: { 
+    config: {
       enabled: true,
       headers: '*',
       origin: [
-        'http://localhost:3000', 
-        'http://localhost:1337', 
+        'http://localhost:3000',
+        'http://localhost:1337',
         'https://i6r407vake.execute-api.us-east-2.amazonaws.com', // API Gateway
         env('FRONTEND_URL', '*') // Frontend placeholder
       ]

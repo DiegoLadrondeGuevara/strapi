@@ -1,16 +1,16 @@
 export default ({ env }) => ({
   connection: {
-    client: env('DATABASE_CLIENT', 'mysql'),
+    client: 'postgres',
     connection: {
       host: env('DATABASE_HOST'),
-      port: env.int('DATABASE_PORT', 3306),
+      port: env.int('DATABASE_PORT', 5432),
       database: env('DATABASE_NAME'),
       user: env('DATABASE_USERNAME'),
       password: env('DATABASE_PASSWORD'),
-      ssl: env.bool('DATABASE_SSL', false) || env('DATABASE_SSL') === 'true'
-        ? { rejectUnauthorized: false } // Required for AWS RDS without a truststore
-        : false,
+      ssl: {
+        rejectUnauthorized: false
+      },
     },
-    pool: { min: 2, max: 10 },
+    useNullAsDefault: true,
   },
 });

@@ -3,7 +3,6 @@ export default ({ env }) => ({
     config: {
       provider: 'aws-s3',
       providerOptions: {
-        baseUrl: env('CLOUDFRONT_URL'),
         s3Options: {
           credentials: {
             accessKeyId: env('AWS_ACCESS_KEY_ID'),
@@ -12,7 +11,7 @@ export default ({ env }) => ({
           region: env('AWS_REGION', 'us-east-2'),
         },
         params: {
-          Bucket: env('S3_BUCKET', 'dulceruth-assets'),
+          Bucket: env('S3_BUCKET'),
         },
       },
       actionOptions: {

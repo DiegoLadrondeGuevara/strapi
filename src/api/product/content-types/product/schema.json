@@ -4,13 +4,18 @@
   "info": {
     "singularName": "product",
     "pluralName": "products",
-    "displayName": "Product"
+    "displayName": "Product",
+    "description": "Lista de productos de la tienda con controles de marketing"
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
+    "uuid": {
+      "type": "uid",
+      "required": true
+    },
     "name": {
       "type": "string",
       "required": true
@@ -26,11 +31,17 @@
       "type": "integer",
       "default": 0
     },
-    "images": {
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "image_url": {
       "type": "media",
-      "multiple": true,
+      "multiple": false,
       "required": false,
-      "allowedTypes": ["images"]
+      "allowedTypes": [
+        "images"
+      ]
     },
     "category": {
       "type": "relation",
