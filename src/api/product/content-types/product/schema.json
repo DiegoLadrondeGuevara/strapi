@@ -4,50 +4,20 @@
   "info": {
     "singularName": "product",
     "pluralName": "products",
-    "displayName": "Product",
-    "description": "Lista de productos de la tienda con controles de marketing"
+    "displayName": "Product"
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "uuid": {
-      "type": "uid",
-      "required": true
-    },
-    "name": {
-      "type": "string",
-      "required": true
-    },
-    "description": {
-      "type": "richtext"
-    },
-    "price": {
-      "type": "decimal",
-      "required": true
-    },
-    "stock": {
-      "type": "integer",
-      "default": 0
-    },
-    "is_active": {
-      "type": "boolean",
-      "default": true
-    },
-    "image_url": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": [
-        "images"
-      ]
-    },
-    "category": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::category.category",
-      "inversedBy": "products"
-    }
+    "uuid": { "type": "uid", "required": true },
+    "name": { "type": "string" },
+    "description": { "type": "richtext" },
+    "price": { "type": "decimal" },
+    "stock": { "type": "integer" },
+    "image_url": { "type": "media", "multiple": false, "allowedTypes": ["images"] },
+    "category": { "type": "string" },
+    "is_active": { "type": "boolean", "default": true }
   }
 }
